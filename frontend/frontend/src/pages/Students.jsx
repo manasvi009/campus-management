@@ -37,6 +37,8 @@ import { useAuth } from '../utils/useAuth';
 
 const Students = () => {
   const { user } = useAuth();
+  console.log('Students component rendered, user:', user);
+
   const [students, setStudents] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [courses, setCourses] = useState([]);
@@ -62,16 +64,20 @@ const Students = () => {
   });
 
   useEffect(() => {
+    console.log('Students useEffect running');
     fetchStudents();
     fetchDepartments();
     fetchCourses();
   }, [fetchStudents, fetchDepartments, fetchCourses]);
 
   const fetchStudents = useCallback(async () => {
+    console.log('Fetching students...');
     try {
       const response = await studentAPI.getStudents();
+      console.log('Students response:', response.data);
       setStudents(response.data.data);
     } catch {
+      console.error('Error fetching students');
       showSnackbar('Error fetching students', 'error');
     } finally {
       setLoading(false);
