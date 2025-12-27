@@ -8,19 +8,25 @@ import {
   Typography,
   Box,
   Alert,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from '@mui/material';
-import { Login as LoginIcon } from '@mui/icons-material';
+import { PersonAdd as PersonAddIcon } from '@mui/icons-material';
 import { useAuth } from '../utils/useAuth';
 
-const Login = () => {
+const Register = () => {
   const [formData, setFormData] = useState({
+    name: '',
     email: '',
     password: '',
+    role: 'student',
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const { login, isAuthenticated } = useAuth();
+  const { register, isAuthenticated } = useAuth();
   const location = useLocation();
 
   const from = location.state?.from?.pathname || '/';
@@ -44,12 +50,14 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const result = await login(formData);
-      if (!result.success) {
+      const result = await register(formData);
+      if (result.success) {
+        // Registration successful, redirect will happen via useEffect
+      } else {
         setError(result.message);
       }
     } catch (err) {
-      setError('Login failed. Please try again.');
+      setError('Registration failed. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -79,9 +87,9 @@ const Login = () => {
             width: '100%',
           }}
         >
-          <LoginIcon sx={{ m: 1, bgcolor: 'primary.main', borderRadius: '50%', p: 1, color: 'white', fontSize: 40 }} />
+          <PersonAddIcon sx={{ m: 1, bgcolor: 'primary.main', borderRadius: '50%', p: 1, color: 'white', fontSize: 40 }} />
           <Typography component="h1" variant="h4" sx={{ mt: 2, mb: 3 }}>
-            Sign In
+            Create Account
           </Typography>
 
           {error && (
@@ -95,11 +103,23 @@ const Login = () => {
               margin="normal"
               required
               fullWidth
+              id="name"
+              label="Full Name"
+              name="name"
+              autoComplete="name"
+              autoFocus
+              value={formData.name}
+              onChange={handleChange}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
               id="email"
               label="Email Address"
               name="email"
               autoComplete="email"
-              autoFocus
+              type="email"
               value={formData.email}
               onChange={handleChange}
             />
@@ -111,10 +131,25 @@ const Login = () => {
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
+              autoComplete="new-password"
               value={formData.password}
               onChange={handleChange}
             />
+            <FormControl fullWidth margin="normal">
+              <InputLabel id="role-label">Role</InputLabel>
+              <Select
+                labelId="role-label"
+                id="role"
+                name="role"
+                value={formData.role}
+                label="Role"
+                onChange={handleChange}
+              >
+                <MenuItem value="student">Student</MenuItem>
+                <MenuItem value="faculty">Faculty</MenuItem>
+                <MenuItem value="admin">Admin</MenuItem>
+              </Select>
+            </FormControl>
             <Button
               type="submit"
               fullWidth
@@ -122,13 +157,13 @@ const Login = () => {
               sx={{ mt: 3, mb: 2 }}
               disabled={loading}
             >
-              {loading ? 'Signing In...' : 'Sign In'}
+              {loading ? 'Creating Account...' : 'Register'}
             </Button>
             <Box sx={{ textAlign: 'center', mt: 2 }}>
               <Typography variant="body2">
-                Don't have an account?{' '}
-                <Link to="/register" style={{ color: 'primary.main', textDecoration: 'none' }}>
-                  Sign up here
+                Already have an account?{' '}
+                <Link to="/login" style={{ color: 'primary.main', textDecoration: 'none' }}>
+                  Sign in here
                 </Link>
               </Typography>
             </Box>
@@ -139,4 +174,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

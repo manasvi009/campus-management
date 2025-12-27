@@ -38,18 +38,18 @@ import { useAuth } from '../utils/useAuth';
 const drawerWidth = 240;
 
 const menuItems = [
-  { text: 'Dashboard', icon: <Dashboard />, path: '/' },
-  { text: 'Students', icon: <School />, path: '/students' },
-  { text: 'Faculty', icon: <Person />, path: '/faculty' },
-  { text: 'Departments', icon: <Business />, path: '/departments' },
-  { text: 'Courses', icon: <Book />, path: '/courses' },
-  { text: 'Attendance', icon: <Assessment />, path: '/attendance' },
-  { text: 'Results', icon: <Assessment />, path: '/results' },
-  { text: 'Fees', icon: <Payment />, path: '/fees' },
-  { text: 'Notices', icon: <Announcement />, path: '/notices' },
-  { text: 'Library', icon: <LibraryBooks />, path: '/library' },
-  { text: 'Placement', icon: <Work />, path: '/placement' },
-  { text: 'Settings', icon: <Settings />, path: '/settings' },
+  { text: 'Dashboard', icon: <Dashboard />, path: '/dashboard' },
+  { text: 'Students', icon: <School />, path: '/dashboard/students' },
+  { text: 'Faculty', icon: <Person />, path: '/dashboard/faculty' },
+  { text: 'Departments', icon: <Business />, path: '/dashboard/departments' },
+  { text: 'Courses', icon: <Book />, path: '/dashboard/courses' },
+  { text: 'Attendance', icon: <Assessment />, path: '/dashboard/attendance' },
+  { text: 'Results', icon: <Assessment />, path: '/dashboard/results' },
+  { text: 'Fees', icon: <Payment />, path: '/dashboard/fees' },
+  { text: 'Notices', icon: <Announcement />, path: '/dashboard/notices' },
+  { text: 'Library', icon: <LibraryBooks />, path: '/dashboard/library' },
+  { text: 'Placement', icon: <Work />, path: '/dashboard/placement' },
+  { text: 'Settings', icon: <Settings />, path: '/dashboard/settings' },
 ];
 
 const Layout = () => {
