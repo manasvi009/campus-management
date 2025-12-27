@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Box,
   Typography,
@@ -65,38 +65,38 @@ const Students = () => {
     fetchStudents();
     fetchDepartments();
     fetchCourses();
-  }, []);
+  }, [fetchStudents, fetchDepartments, fetchCourses]);
 
-  const fetchStudents = async () => {
+  const fetchStudents = useCallback(async () => {
     try {
       const response = await studentAPI.getStudents();
       setStudents(response.data.data);
-    } catch (error) {
+    } catch {
       showSnackbar('Error fetching students', 'error');
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  const fetchDepartments = async () => {
+  const fetchDepartments = useCallback(async () => {
     try {
       const response = await departmentAPI.getDepartments();
       setDepartments(response.data.data);
-    } catch (error) {
-      console.error('Error fetching departments:', error);
+    } catch {
+      console.error('Error fetching departments');
       showSnackbar('Error fetching departments', 'error');
     }
-  };
+  }, []);
 
-  const fetchCourses = async () => {
+  const fetchCourses = useCallback(async () => {
     try {
       const response = await courseAPI.getCourses();
       setCourses(response.data.data);
-    } catch (error) {
-      console.error('Error fetching courses:', error);
+    } catch {
+      console.error('Error fetching courses');
       showSnackbar('Error fetching courses', 'error');
     }
-  };
+  }, []);
 
   const showSnackbar = (message, severity = 'success') => {
     setSnackbar({ open: true, message, severity });
@@ -167,7 +167,7 @@ const Students = () => {
         await studentAPI.deleteStudent(id);
         showSnackbar('Student deleted successfully');
         fetchStudents();
-      } catch (error) {
+      } catch {
         showSnackbar('Error deleting student', 'error');
       }
     }
