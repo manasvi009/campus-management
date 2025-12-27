@@ -68,6 +68,22 @@ export const studentAPI = {
   updateStudent: (id, studentData) => api.put(`/students/${id}`, studentData),
   deleteStudent: (id) => api.delete(`/students/${id}`),
   getStudentByUserId: (userId) => api.get(`/students/user/${userId}`),
+  getStudentProfile: () => api.get('/students/profile'),
+  updateStudentProfile: (profileData) => api.put('/students/profile', profileData),
+  getStudentEnrollments: () => api.get('/students/enrollments'),
+  getAvailableSubjects: () => api.get('/students/available-subjects'),
+  enrollInSubject: (enrollmentData) => api.post('/students/enroll', enrollmentData),
+  dropSubject: (enrollmentId) => api.delete(`/students/enroll/${enrollmentId}`),
+  getStudentTimetable: (params) => api.get('/students/timetable', { params }),
+  getStudentAttendance: (params) => api.get('/students/attendance', { params }),
+  getStudentNotices: (params) => api.get('/students/notices', { params }),
+  getStudyMaterials: (params) => api.get('/students/study-materials', { params }),
+  downloadStudyMaterial: (materialId) => api.get(`/students/study-materials/${materialId}/download`, { responseType: 'blob' }),
+  getStudentQueries: () => api.get('/students/queries'),
+  submitQuery: (queryData) => api.post('/students/queries', queryData),
+  getJobPostings: () => api.get('/students/job-postings'),
+  getPlacementStats: () => api.get('/students/placement-stats'),
+  applyForJob: (jobId) => api.post('/students/job-applications', { jobId }),
 };
 
 // Department API
@@ -96,6 +112,26 @@ export const facultyAPI = {
   updateFaculty: (id, facultyData) => api.put(`/faculty/${id}`, facultyData),
   deleteFaculty: (id) => api.delete(`/faculty/${id}`),
   getFacultyByUserId: (userId) => api.get(`/faculty/user/${userId}`),
+};
+
+// Admin API
+export const adminAPI = {
+  getDashboardStats: () => api.get('/admin/dashboard-stats'),
+  getPendingApprovals: () => api.get('/admin/pending-approvals'),
+  approveStudent: (studentId, approvalData) => api.put(`/admin/approve-student/${studentId}`, approvalData),
+  getAllUsers: (params) => api.get('/admin/users', { params }),
+  updateUserPermissions: (userId, permissionData) => api.put(`/admin/users/${userId}/permissions`, permissionData),
+  getActivityLogs: (params) => api.get('/admin/activity-logs', { params }),
+};
+
+// Notices API
+export const noticeAPI = {
+  getNotices: (params) => api.get('/notices', { params }),
+  getNotice: (id) => api.get(`/notices/${id}`),
+  createNotice: (noticeData) => api.post('/notices', noticeData),
+  updateNotice: (id, noticeData) => api.put(`/notices/${id}`, noticeData),
+  deleteNotice: (id) => api.delete(`/notices/${id}`),
+  getNoticeCategories: () => api.get('/notices/categories'),
 };
 
 export default api;
