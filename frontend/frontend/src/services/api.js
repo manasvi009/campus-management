@@ -124,6 +124,16 @@ export const adminAPI = {
   getActivityLogs: (params) => api.get('/admin/activity-logs', { params }),
 };
 
+// Attendance API
+export const attendanceAPI = {
+  getStudentAttendance: (studentId, params) => api.get(`/attendance/student/${studentId}`, { params }),
+  getSubjectAttendance: (subjectId, params) => api.get(`/attendance/subject/${subjectId}`, { params }),
+  getEnrolledStudents: (subjectId) => api.get(`/attendance/subject/${subjectId}/students`),
+  markAttendance: (attendanceData) => api.post('/attendance', attendanceData),
+  bulkMarkAttendance: (bulkData) => api.post('/attendance/bulk', bulkData),
+  getAttendanceStats: (studentId, params) => api.get(`/attendance/stats/${studentId}`, { params }),
+};
+
 // Notices API
 export const noticeAPI = {
   getNotices: (params) => api.get('/notices', { params }),
