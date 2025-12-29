@@ -44,7 +44,7 @@ import {
   Business as BusinessIcon,
   LibraryBooks as LibraryIcon,
 } from '@mui/icons-material';
-import { courseAPI, departmentAPI, subjectAPI } from '../services/api';
+import { courseAPI, departmentAPI } from '../services/api';
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
@@ -90,14 +90,13 @@ const Courses = () => {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const [coursesRes, subjectsRes, deptsRes] = await Promise.all([
+      const [coursesRes, deptsRes] = await Promise.all([
         courseAPI.getCourses(),
-        subjectAPI.getSubjects ? subjectAPI.getSubjects() : Promise.resolve({ data: { data: [] } }),
         departmentAPI.getDepartments(),
       ]);
 
       setCourses(coursesRes.data.data);
-      setSubjects(subjectsRes.data.data || []);
+      setSubjects([]); // Empty array since subjects API not implemented
       setDepartments(deptsRes.data.data);
     } catch (err) {
       setError('Failed to load courses and subjects data');

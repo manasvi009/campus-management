@@ -46,7 +46,7 @@ import {
   Phone as PhoneIcon,
   RemoveCircle as RemoveIcon,
 } from '@mui/icons-material';
-import { facultyAPI, departmentAPI, subjectAPI } from '../services/api';
+import { facultyAPI, departmentAPI } from '../services/api';
 
 const Faculty = () => {
   const [faculty, setFaculty] = useState([]);
@@ -86,15 +86,14 @@ const Faculty = () => {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const [facultyRes, deptsRes, subjectsRes] = await Promise.all([
+      const [facultyRes, deptsRes] = await Promise.all([
         facultyAPI.getFaculty(),
         departmentAPI.getDepartments(),
-        subjectAPI.getSubjects ? subjectAPI.getSubjects() : Promise.resolve({ data: { data: [] } }),
       ]);
 
       setFaculty(facultyRes.data.data);
       setDepartments(deptsRes.data.data);
-      setSubjects(subjectsRes.data.data || []);
+      setSubjects([]); // Empty array since subjects API not implemented
     } catch (err) {
       setError('Failed to load faculty data');
       console.error('Faculty fetch error:', err);
