@@ -47,7 +47,7 @@ const CourseEnrollment = () => {
     try {
       const response = await studentAPI.getStudentEnrollments();
       setEnrollments(response.data);
-    } catch (err) {
+    } catch {
       setError('Failed to load enrollments');
     }
   };
@@ -57,7 +57,7 @@ const CourseEnrollment = () => {
       setLoading(true);
       const response = await studentAPI.getAvailableSubjects();
       setAvailableSubjects(response.data);
-    } catch (err) {
+    } catch {
       setError('Failed to load available subjects');
     } finally {
       setLoading(false);

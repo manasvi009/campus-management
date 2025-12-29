@@ -48,7 +48,7 @@ const Login = () => {
       if (!result.success) {
         setError(result.message);
       }
-    } catch (err) {
+    } catch {
       setError('Login failed. Please try again.');
     } finally {
       setLoading(false);

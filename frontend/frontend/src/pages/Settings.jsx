@@ -46,7 +46,6 @@ import {
 import { adminAPI } from '../services/api';
 
 const Settings = () => {
-  const [settings, setSettings] = useState({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -73,32 +72,17 @@ const Settings = () => {
   });
 
   useEffect(() => {
-    fetchSettings();
     fetchCalendars();
   }, []);
-
-  const fetchSettings = async () => {
-    try {
-      setLoading(true);
-      const response = await adminAPI.getSettings();
-      setSettings(response.data.data || {});
-      setSystemSettings({
-        ...systemSettings,
-        ...response.data.data,
-      });
-    } catch (err) {
-      setError('Failed to load settings');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const fetchCalendars = async () => {
     try {
       const response = await adminAPI.getCalendars();
       setCalendars(response.data.data || []);
-    } catch (err) {
+      setLoading(false);
+    } catch {
       console.error('Failed to load calendars');
+      setLoading(false);
     }
   };
 
@@ -108,7 +92,7 @@ const Settings = () => {
       await adminAPI.updateSettings(systemSettings);
       setSuccess('Settings saved successfully');
       setTimeout(() => setSuccess(''), 3000);
-    } catch (err) {
+    } catch {
       setError('Failed to save settings');
     } finally {
       setSaving(false);
@@ -135,7 +119,7 @@ const Settings = () => {
       fetchCalendars();
       setSuccess('Calendar uploaded successfully');
       setTimeout(() => setSuccess(''), 3000);
-    } catch (err) {
+    } catch {
       setError('Failed to upload calendar');
     }
   };
@@ -147,7 +131,7 @@ const Settings = () => {
         fetchCalendars();
         setSuccess('Calendar deleted successfully');
         setTimeout(() => setSuccess(''), 3000);
-      } catch (err) {
+      } catch {
         setError('Failed to delete calendar');
       }
     }
@@ -163,7 +147,7 @@ const Settings = () => {
       document.body.appendChild(link);
       link.click();
       link.remove();
-    } catch (err) {
+    } catch {
       setError('Failed to download calendar');
     }
   };

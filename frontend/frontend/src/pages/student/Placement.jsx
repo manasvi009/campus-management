@@ -53,7 +53,7 @@ const Placement = () => {
       ]);
       setJobPostings(postingsResponse.data);
       setPlacementStats(statsResponse.data);
-    } catch (err) {
+    } catch {
       setError('Failed to load placement data');
     } finally {
       setLoading(false);
@@ -64,7 +64,7 @@ const Placement = () => {
     try {
       setApplying(true);
       await studentAPI.applyForJob(jobId);
-      setSuccess('Application submitted successfully');
+      // setSuccess('Application submitted successfully');
       await fetchPlacementData(); // Refresh data
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to apply for job');

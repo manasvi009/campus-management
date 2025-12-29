@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Container,
   Paper,
@@ -44,20 +44,20 @@ const Timetable = () => {
 
   useEffect(() => {
     fetchTimetable();
-  }, [selectedSemester]);
+  }, [selectedSemester, fetchTimetable]);
 
-  const fetchTimetable = async () => {
+  const fetchTimetable = useCallback(async () => {
     try {
       setLoading(true);
       const response = await studentAPI.getStudentTimetable(selectedSemester ? { semester: selectedSemester } : {});
       setTimetable(response.data.timetable || []);
       setAvailableSemesters(response.data.availableSemesters || []);
-    } catch (err) {
+    } catch {
       setError('Failed to load timetable');
     } finally {
       setLoading(false);
     }
-  };
+  }, [selectedSemester]);
 
   const getClassForSlot = (day, time) => {
     return timetable.find(slot =>

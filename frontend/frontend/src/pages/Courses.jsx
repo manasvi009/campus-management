@@ -113,7 +113,7 @@ const Courses = () => {
       setCreateCourseDialogOpen(false);
       resetCourseForm();
       fetchData();
-    } catch (err) {
+    } catch {
       setError('Failed to create course');
     }
   };
@@ -124,7 +124,7 @@ const Courses = () => {
       setEditCourseDialogOpen(false);
       resetCourseForm();
       fetchData();
-    } catch (err) {
+    } catch {
       setError('Failed to update course');
     }
   };
@@ -134,7 +134,7 @@ const Courses = () => {
       try {
         await courseAPI.deleteCourse(courseId);
         fetchData();
-      } catch (err) {
+      } catch {
         setError('Failed to delete course');
       }
     }
@@ -148,7 +148,7 @@ const Courses = () => {
       setCreateSubjectDialogOpen(false);
       resetSubjectForm();
       // fetchData(); // Uncomment when backend is ready
-    } catch (err) {
+    } catch {
       setError('Failed to create subject');
     }
   };
@@ -160,7 +160,7 @@ const Courses = () => {
       setEditSubjectDialogOpen(false);
       resetSubjectForm();
       // fetchData(); // Uncomment when backend is ready
-    } catch (err) {
+    } catch {
       setError('Failed to update subject');
     }
   };
@@ -171,7 +171,7 @@ const Courses = () => {
         // This would need a backend endpoint for deleting subjects
         console.log('Deleting subject:', subjectId);
         // fetchData(); // Uncomment when backend is ready
-      } catch (err) {
+      } catch {
         setError('Failed to delete subject');
       }
     }

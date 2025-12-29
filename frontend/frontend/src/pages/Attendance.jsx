@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Container,
   Paper,
@@ -46,21 +46,20 @@ const Attendance = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const [existingAttendance, setExistingAttendance] = useState([]);
 
   useEffect(() => {
     if (user?.role === 'faculty') {
       fetchFacultySubjects();
     }
-  }, [user]);
+  }, [user, fetchFacultySubjects]);
 
   useEffect(() => {
     if (selectedSubject && selectedDate) {
       fetchStudentsAndAttendance();
     }
-  }, [selectedSubject, selectedDate]);
+  }, [selectedSubject, selectedDate, fetchStudentsAndAttendance]);
 
-  const fetchFacultySubjects = async () => {
+  const fetchFacultySubjects = useCallback(async () => {
     try {
       // Get faculty details to find assigned subjects
       const facultyResponse = await facultyAPI.getFacultyByUserId(user._id);
@@ -69,12 +68,12 @@ const Attendance = () => {
       // For now, we'll assume faculty teaches all subjects in their department
       // In a real app, you'd have a FacultySubject model
       setSubjects(faculty.subjectsAssigned || []);
-    } catch (error) {
+    } catch {
       setError('Failed to fetch subjects');
     }
-  };
+  }, [user, setSubjects, setError]);
 
-  const fetchStudentsAndAttendance = async () => {
+  const fetchStudentsAndAttendance = useCallback(async () => {
     try {
       setLoading(true);
       setError('');
@@ -88,7 +87,6 @@ const Attendance = () => {
       const attendanceResponse = await attendanceAPI.getSubjectAttendance(selectedSubject, {
         date: selectedDate.toISOString().split('T')[0]
       });
-      setExistingAttendance(attendanceResponse.data.data);
 
       // Create attendance data map from existing records
       const attendanceMap = {};
@@ -97,12 +95,12 @@ const Attendance = () => {
       });
       setAttendanceData(attendanceMap);
 
-    } catch (error) {
+    } catch {
       setError('Failed to fetch attendance data');
     } finally {
       setLoading(false);
     }
-  };
+  }, [selectedSubject, selectedDate, setLoading, setError, setStudents, setAttendanceData]);
 
   const handleAttendanceChange = (studentId, status) => {
     setAttendanceData(prev => ({

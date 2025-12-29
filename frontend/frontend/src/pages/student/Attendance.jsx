@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Container,
   Paper,
@@ -39,9 +39,9 @@ const Attendance = () => {
 
   useEffect(() => {
     fetchAttendance();
-  }, [selectedSubject]);
+  }, [selectedSubject, fetchAttendance]);
 
-  const fetchAttendance = async () => {
+  const fetchAttendance = useCallback(async () => {
     try {
       setLoading(true);
       const params = selectedSubject ? { subjectId: selectedSubject } : {};
@@ -49,12 +49,12 @@ const Attendance = () => {
       setAttendance(response.data.attendance || []);
       setSubjects(response.data.subjects || []);
       setStats(response.data.stats || stats);
-    } catch (err) {
+    } catch {
       setError('Failed to load attendance');
     } finally {
       setLoading(false);
     }
-  };
+  }, [selectedSubject, stats]);
 
   const getStatusIcon = (status) => {
     switch (status) {

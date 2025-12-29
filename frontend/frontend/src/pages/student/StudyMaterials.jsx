@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Container,
   Paper,
@@ -45,9 +45,9 @@ const StudyMaterials = () => {
 
   useEffect(() => {
     fetchMaterials();
-  }, [filter]);
+  }, [filter, fetchMaterials]);
 
-  const fetchMaterials = async () => {
+  const fetchMaterials = useCallback(async () => {
     try {
       setLoading(true);
       const params = {
@@ -57,12 +57,12 @@ const StudyMaterials = () => {
       const response = await studentAPI.getStudyMaterials(params);
       setMaterials(response.data.materials || []);
       setSubjects(response.data.subjects || []);
-    } catch (err) {
+    } catch {
       setError('Failed to load study materials');
     } finally {
       setLoading(false);
     }
-  };
+  }, [filter]);
 
   const handleDownload = async (materialId, filename) => {
     try {
@@ -84,7 +84,7 @@ const StudyMaterials = () => {
       window.URL.revokeObjectURL(url);
 
       setSuccess(`Downloaded ${filename} successfully`);
-    } catch (err) {
+    } catch {
       setError('Failed to download material');
     } finally {
       setDownloading(null);

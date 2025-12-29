@@ -59,7 +59,7 @@ const Queries = () => {
       setLoading(true);
       const response = await studentAPI.getStudentQueries();
       setQueries(response.data);
-    } catch (err) {
+    } catch {
       setError('Failed to load queries');
     } finally {
       setLoading(false);

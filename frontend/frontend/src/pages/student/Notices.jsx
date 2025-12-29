@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Container,
   Paper,
@@ -30,20 +30,20 @@ const Notices = () => {
 
   useEffect(() => {
     fetchNotices();
-  }, [filter]);
+  }, [filter, fetchNotices]);
 
-  const fetchNotices = async () => {
+  const fetchNotices = useCallback(async () => {
     try {
       setLoading(true);
       const params = filter !== 'all' ? { category: filter } : {};
       const response = await studentAPI.getStudentNotices(params);
       setNotices(response.data);
-    } catch (err) {
+    } catch {
       setError('Failed to load notices');
     } finally {
       setLoading(false);
     }
-  };
+  }, [filter]);
 
   const getPriorityColor = (priority) => {
     switch (priority) {

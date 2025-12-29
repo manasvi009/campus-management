@@ -114,7 +114,7 @@ const Departments = () => {
       setCreateDialogOpen(false);
       resetForm();
       fetchData();
-    } catch (err) {
+    } catch {
       setError('Failed to create department');
     }
   };
@@ -125,7 +125,7 @@ const Departments = () => {
       setEditDialogOpen(false);
       resetForm();
       fetchData();
-    } catch (err) {
+    } catch {
       setError('Failed to update department');
     }
   };
@@ -135,7 +135,7 @@ const Departments = () => {
       try {
         await departmentAPI.deleteDepartment(departmentId);
         fetchData();
-      } catch (err) {
+      } catch {
         setError('Failed to delete department');
       }
     }

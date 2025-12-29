@@ -104,7 +104,7 @@ const Students = () => {
       setCreateDialogOpen(false);
       resetForm();
       fetchData();
-    } catch (err) {
+    } catch {
       setError('Failed to create student');
     }
   };
@@ -115,7 +115,7 @@ const Students = () => {
       setEditDialogOpen(false);
       resetForm();
       fetchData();
-    } catch (err) {
+    } catch {
       setError('Failed to update student');
     }
   };
@@ -125,7 +125,7 @@ const Students = () => {
       try {
         await studentAPI.deleteStudent(studentId);
         fetchData();
-      } catch (err) {
+      } catch {
         setError('Failed to delete student');
       }
     }
@@ -137,7 +137,7 @@ const Students = () => {
       setApproveDialogOpen(false);
       setSelectedStudent(null);
       fetchData();
-    } catch (err) {
+    } catch {
       setError('Failed to process approval');
     }
   };

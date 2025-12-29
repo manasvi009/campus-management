@@ -90,7 +90,7 @@ const Notices = () => {
       setCreateDialogOpen(false);
       resetForm();
       fetchData();
-    } catch (err) {
+    } catch {
       setError('Failed to create notice');
     }
   };
@@ -101,7 +101,7 @@ const Notices = () => {
       setEditDialogOpen(false);
       resetForm();
       fetchData();
-    } catch (err) {
+    } catch {
       setError('Failed to update notice');
     }
   };
@@ -111,7 +111,7 @@ const Notices = () => {
       try {
         await noticeAPI.deleteNotice(noticeId);
         fetchData();
-      } catch (err) {
+      } catch {
         setError('Failed to delete notice');
       }
     }

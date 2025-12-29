@@ -16,11 +16,9 @@ import {
   Chip,
 } from '@mui/material';
 import { Person as PersonIcon, Save as SaveIcon } from '@mui/icons-material';
-import { useAuth } from '../../utils/useAuth';
 import { studentAPI } from '../../services/api';
 
 const StudentProfile = () => {
-  const { user } = useAuth();
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -58,7 +56,7 @@ const StudentProfile = () => {
         guardianName: response.data.guardianName || '',
         guardianPhone: response.data.guardianPhone || '',
       });
-    } catch (err) {
+    } catch {
       setError('Failed to load profile');
     } finally {
       setLoading(false);

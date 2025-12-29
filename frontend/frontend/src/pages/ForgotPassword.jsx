@@ -42,7 +42,7 @@ const ForgotPassword = () => {
     setLoading(true);
 
     try {
-      const response = await authAPI.forgotPassword({ email: formData.email });
+      await authAPI.forgotPassword({ email: formData.email });
       setMessage('OTP sent to your email successfully');
       setActiveStep(1);
     } catch (err) {
@@ -58,7 +58,7 @@ const ForgotPassword = () => {
     setLoading(true);
 
     try {
-      const response = await authAPI.verifyOTP({
+      await authAPI.verifyOTP({
         email: formData.email,
         otp: formData.otp,
         purpose: 'password_reset',
@@ -89,7 +89,7 @@ const ForgotPassword = () => {
     setLoading(true);
 
     try {
-      const response = await authAPI.resetPassword({
+      await authAPI.resetPassword({
         email: formData.email,
         otp: formData.otp,
         newPassword: formData.newPassword,

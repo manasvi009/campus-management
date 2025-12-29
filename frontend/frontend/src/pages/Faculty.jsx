@@ -55,7 +55,6 @@ const Faculty = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedTab, setSelectedTab] = useState(0);
 
   // Dialog states
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
@@ -110,7 +109,7 @@ const Faculty = () => {
       setCreateDialogOpen(false);
       resetForm();
       fetchData();
-    } catch (err) {
+    } catch {
       setError('Failed to create faculty');
     }
   };
@@ -121,7 +120,7 @@ const Faculty = () => {
       setEditDialogOpen(false);
       resetForm();
       fetchData();
-    } catch (err) {
+    } catch {
       setError('Failed to update faculty');
     }
   };
@@ -131,7 +130,7 @@ const Faculty = () => {
       try {
         await facultyAPI.deleteFaculty(facultyId);
         fetchData();
-      } catch (err) {
+      } catch {
         setError('Failed to delete faculty');
       }
     }
@@ -143,7 +142,7 @@ const Faculty = () => {
       // For now, we'll just update the local state
       setAssignedSubjects([...assignedSubjects, subjects.find(s => s._id === subjectId)]);
       setAvailableSubjects(availableSubjects.filter(s => s._id !== subjectId));
-    } catch (err) {
+    } catch {
       setError('Failed to assign subject');
     }
   };
@@ -152,7 +151,7 @@ const Faculty = () => {
     try {
       setAvailableSubjects([...availableSubjects, assignedSubjects.find(s => s._id === subjectId)]);
       setAssignedSubjects(assignedSubjects.filter(s => s._id !== subjectId));
-    } catch (err) {
+    } catch {
       setError('Failed to remove subject');
     }
   };
