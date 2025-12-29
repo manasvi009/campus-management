@@ -42,12 +42,18 @@ import {
 } from '@mui/icons-material';
 import { useAuth } from '../utils/useAuth';
 import { adminAPI } from '../services/api';
+import StudentDashboard from './student/StudentDashboard';
 
 const Dashboard = () => {
   const { user } = useAuth();
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+
+  // If user is a student, render student dashboard
+  if (user?.role === 'student') {
+    return <StudentDashboard />;
+  }
 
   useEffect(() => {
     fetchDashboardStats();

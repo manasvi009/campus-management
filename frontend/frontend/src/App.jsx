@@ -22,6 +22,16 @@ import Placement from './pages/Placement';
 import Settings from './pages/Settings';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
+// Student pages
+import StudentDashboard from './pages/student/StudentDashboard';
+import StudentProfile from './pages/student/StudentProfile';
+import CourseEnrollment from './pages/student/CourseEnrollment';
+import StudentAttendance from './pages/student/Attendance';
+import Timetable from './pages/student/Timetable';
+import StudentNotices from './pages/student/Notices';
+import StudyMaterials from './pages/student/StudyMaterials';
+import Queries from './pages/student/Queries';
+import StudentPlacement from './pages/student/Placement';
 import './App.css';
 
 const theme = createTheme({
@@ -64,6 +74,15 @@ function App() {
             <Route path="library" element={<Library />} />
             <Route path="placement" element={<Placement />} />
             <Route path="settings" element={<Settings />} />
+            {/* Student routes */}
+            <Route path="profile" element={<StudentProfile />} />
+            <Route path="enrollment" element={<CourseEnrollment />} />
+            <Route path="timetable" element={<Timetable />} />
+            <Route path="attendance" element={<StudentAttendance />} />
+            <Route path="study-materials" element={<StudyMaterials />} />
+            <Route path="queries" element={<Queries />} />
+            <Route path="notices" element={<StudentNotices />} />
+            <Route path="placement" element={<StudentPlacement />} />
           </Route>
         </Routes>
       </ThemeProvider>

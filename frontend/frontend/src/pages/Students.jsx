@@ -15,6 +15,9 @@ import {
   DialogContent,
   DialogActions,
   TextField,
+  FormControl,
+  InputLabel,
+  Select,
   MenuItem,
   Chip,
   IconButton,
@@ -57,6 +60,7 @@ const Students = () => {
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [approveDialogOpen, setApproveDialogOpen] = useState(false);
+  const [approvalDialogOpen, setApprovalDialogOpen] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
@@ -70,6 +74,14 @@ const Students = () => {
     address: '',
     dateOfBirth: '',
     gender: '',
+  });
+
+  const [approvalData, setApprovalData] = useState({
+    departmentId: '',
+    courseId: '',
+    enrollmentNumber: '',
+    rollNumber: '',
+    semester: 1,
   });
 
   useEffect(() => {
@@ -131,9 +143,13 @@ const Students = () => {
     }
   };
 
-  const handleApproveStudent = async (approved, rejectionReason = '') => {
+  const handleApproveStudent = async (approved, approvalData = {}) => {
     try {
-      await adminAPI.approveStudent(selectedStudent._id, { approved, rejectionReason });
+      const data = {
+        approved,
+        ...approvalData
+      };
+      await adminAPI.approveStudent(selectedStudent._id, data);
       setApproveDialogOpen(false);
       setSelectedStudent(null);
       fetchData();
@@ -371,7 +387,14 @@ const Students = () => {
                       <IconButton
                         onClick={() => {
                           setSelectedStudent(student);
-                          handleApproveStudent(true);
+                          setApprovalData({
+                            departmentId: student.departmentId?._id || '',
+                            courseId: student.courseId?._id || '',
+                            enrollmentNumber: student.enrollmentNumber || '',
+                            rollNumber: student.rollNumber || '',
+                            semester: student.semester || 1,
+                          });
+                          setApprovalDialogOpen(true);
                         }}
                         color="success"
                       >
@@ -659,6 +682,96 @@ const Students = () => {
           <Button onClick={() => setApproveDialogOpen(false)}>Cancel</Button>
           <Button onClick={() => handleApproveStudent(false)} color="error" variant="contained">
             Reject Application
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Approve Student Dialog */}
+      <Dialog open={approvalDialogOpen} onClose={() => setApprovalDialogOpen(false)} maxWidth="md" fullWidth>
+        <DialogTitle>Approve Student Application</DialogTitle>
+        <DialogContent>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+            Please provide the following details to complete the student registration:
+          </Typography>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Enrollment Number"
+                value={approvalData.enrollmentNumber}
+                onChange={(e) => setApprovalData({ ...approvalData, enrollmentNumber: e.target.value })}
+                required
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Roll Number"
+                value={approvalData.rollNumber}
+                onChange={(e) => setApprovalData({ ...approvalData, rollNumber: e.target.value })}
+                required
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth>
+                <InputLabel>Department</InputLabel>
+                <Select
+                  value={approvalData.departmentId}
+                  onChange={(e) => setApprovalData({ ...approvalData, departmentId: e.target.value })}
+                  label="Department"
+                  required
+                >
+                  {departments.map((dept) => (
+                    <MenuItem key={dept._id} value={dept._id}>
+                      {dept.departmentName}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth>
+                <InputLabel>Course</InputLabel>
+                <Select
+                  value={approvalData.courseId}
+                  onChange={(e) => setApprovalData({ ...approvalData, courseId: e.target.value })}
+                  label="Course"
+                  required
+                >
+                  {courses
+                    .filter((course) => !approvalData.departmentId || course.departmentId === approvalData.departmentId)
+                    .map((course) => (
+                      <MenuItem key={course._id} value={course._id}>
+                        {course.courseName}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Semester"
+                type="number"
+                value={approvalData.semester}
+                onChange={(e) => setApprovalData({ ...approvalData, semester: parseInt(e.target.value) })}
+                inputProps={{ min: 1, max: 8 }}
+                required
+              />
+            </Grid>
+          </Grid>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setApprovalDialogOpen(false)}>Cancel</Button>
+          <Button
+            onClick={() => {
+              handleApproveStudent(true, approvalData);
+              setApprovalDialogOpen(false);
+            }}
+            variant="contained"
+            color="success"
+          >
+            Approve Student
           </Button>
         </DialogActions>
       </Dialog>

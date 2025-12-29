@@ -32,12 +32,17 @@ import {
   Work,
   Settings,
   Logout,
+  AccountCircle,
+  Schedule,
+  Download,
+  QuestionAnswer,
 } from '@mui/icons-material';
 import { useAuth } from '../utils/useAuth';
 
 const drawerWidth = 240;
 
-const menuItems = [
+// Admin/Faculty menu items
+const adminMenuItems = [
   { text: 'Dashboard', icon: <Dashboard />, path: '/dashboard' },
   { text: 'Students', icon: <School />, path: '/dashboard/students' },
   { text: 'Faculty', icon: <Person />, path: '/dashboard/faculty' },
@@ -50,6 +55,19 @@ const menuItems = [
   { text: 'Library', icon: <LibraryBooks />, path: '/dashboard/library' },
   { text: 'Placement', icon: <Work />, path: '/dashboard/placement' },
   { text: 'Settings', icon: <Settings />, path: '/dashboard/settings' },
+];
+
+// Student menu items
+const studentMenuItems = [
+  { text: 'Dashboard', icon: <Dashboard />, path: '/dashboard' },
+  { text: 'My Profile', icon: <AccountCircle />, path: '/dashboard/profile' },
+  { text: 'Course Enrollment', icon: <School />, path: '/dashboard/enrollment' },
+  { text: 'Timetable', icon: <Schedule />, path: '/dashboard/timetable' },
+  { text: 'Attendance', icon: <Assessment />, path: '/dashboard/attendance' },
+  { text: 'Study Materials', icon: <Download />, path: '/dashboard/study-materials' },
+  { text: 'Queries', icon: <QuestionAnswer />, path: '/dashboard/queries' },
+  { text: 'Notices', icon: <Announcement />, path: '/dashboard/notices' },
+  { text: 'Placement', icon: <Work />, path: '/dashboard/placement' },
 ];
 
 const Layout = () => {
@@ -76,6 +94,9 @@ const Layout = () => {
     navigate('/login');
     handleProfileMenuClose();
   };
+
+  // Determine menu items based on user role
+  const menuItems = user?.role === 'student' ? studentMenuItems : adminMenuItems;
 
   const drawer = (
     <div>
