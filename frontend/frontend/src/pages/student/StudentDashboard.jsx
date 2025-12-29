@@ -132,6 +132,18 @@ const StudentDashboard = () => {
         </Alert>
       )}
 
+      {user?.approvalStatus === 'pending' && (
+        <Alert severity="warning" sx={{ mb: 3 }}>
+          Your account is pending admin approval. Some features may be limited until your account is verified.
+        </Alert>
+      )}
+
+      {user?.approvalStatus === 'rejected' && (
+        <Alert severity="error" sx={{ mb: 3 }}>
+          Your account registration has been rejected. Please contact the administrator for more information.
+        </Alert>
+      )}
+
       {/* Welcome Section */}
       <Box sx={{ mb: 4 }}>
         <Typography variant="h4" component="h1" gutterBottom>
@@ -204,8 +216,16 @@ const StudentDashboard = () => {
                   Account Status
                 </Typography>
                 <Chip
-                  label={user?.approvalStatus || 'Active'}
-                  color={user?.approvalStatus === 'approved' ? 'success' : 'warning'}
+                  label={
+                    user?.approvalStatus === 'approved' ? 'Verified' :
+                    user?.approvalStatus === 'pending' ? 'Pending Approval' :
+                    user?.approvalStatus === 'rejected' ? 'Rejected' : 'Active'
+                  }
+                  color={
+                    user?.approvalStatus === 'approved' ? 'success' :
+                    user?.approvalStatus === 'pending' ? 'warning' :
+                    user?.approvalStatus === 'rejected' ? 'error' : 'default'
+                  }
                   size="small"
                 />
               </CardContent>

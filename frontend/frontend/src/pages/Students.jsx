@@ -91,6 +91,7 @@ const Students = () => {
   const fetchData = async () => {
     try {
       setLoading(true);
+      console.log('Fetching students data...');
       const [studentsRes, deptsRes, coursesRes, approvalsRes] = await Promise.all([
         studentAPI.getStudents(),
         departmentAPI.getDepartments(),
@@ -98,10 +99,16 @@ const Students = () => {
         adminAPI.getPendingApprovals(),
       ]);
 
+      console.log('Students response:', studentsRes.data);
+      console.log('Departments response:', deptsRes.data);
+      console.log('Courses response:', coursesRes.data);
+      console.log('Pending approvals response:', approvalsRes.data);
+
       setStudents(studentsRes.data.data);
       setDepartments(deptsRes.data.data);
       setCourses(coursesRes.data.data);
       setPendingApprovals(approvalsRes.data.data);
+      console.log('Pending approvals set:', approvalsRes.data.data);
     } catch (err) {
       setError('Failed to load students data');
       console.error('Students fetch error:', err);
