@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
 
 // Create axios instance
 const api = axios.create({
@@ -112,6 +112,10 @@ export const facultyAPI = {
   updateFaculty: (id, facultyData) => api.put(`/faculty/${id}`, facultyData),
   deleteFaculty: (id) => api.delete(`/faculty/${id}`),
   getFacultyByUserId: (userId) => api.get(`/faculty/user/${userId}`),
+  getFacultyStats: (userId) => api.get(`/faculty/stats/${userId}`),
+  getAssignedQueries: (params) => api.get(`/faculty/queries/${params.userId}`, { params }),
+  respondToQuery: (queryId, responseData) => api.put(`/faculty/queries/${queryId}/respond`, responseData),
+  getFacultyTimetable: () => api.get(`/faculty/timetable/${JSON.parse(localStorage.getItem('user')).id}`),
 };
 
 // Admin API

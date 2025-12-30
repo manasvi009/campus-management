@@ -22,16 +22,11 @@ import Placement from './pages/Placement';
 import Settings from './pages/Settings';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
-// Student pages
-import StudentDashboard from './pages/student/StudentDashboard';
-import StudentProfile from './pages/student/StudentProfile';
-import CourseEnrollment from './pages/student/CourseEnrollment';
-import StudentAttendance from './pages/student/Attendance';
-import Timetable from './pages/student/Timetable';
-import StudentNotices from './pages/student/Notices';
-import StudyMaterials from './pages/student/StudyMaterials';
-import Queries from './pages/student/Queries';
-import StudentPlacement from './pages/student/Placement';
+// Faculty pages
+import FacultyDashboard from './pages/faculty/FacultyDashboard';
+import FacultyProfile from './pages/faculty/FacultyProfile';
+import FacultyQueries from './pages/faculty/FacultyQueries';
+import FacultyTimetable from './pages/faculty/FacultyTimetable';
 import './App.css';
 
 const theme = createTheme({
@@ -74,6 +69,10 @@ function App() {
             <Route path="library" element={<Library />} />
             <Route path="placement" element={<Placement />} />
             <Route path="settings" element={<Settings />} />
+            {/* Faculty routes */}
+            <Route path="faculty-profile" element={<FacultyProfile />} />
+            <Route path="faculty-queries" element={<FacultyQueries />} />
+            <Route path="faculty-timetable" element={<FacultyTimetable />} />
             {/* Student routes */}
             <Route path="profile" element={<StudentProfile />} />
             <Route path="enrollment" element={<CourseEnrollment />} />

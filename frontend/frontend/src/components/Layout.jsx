@@ -41,7 +41,7 @@ import { useAuth } from '../utils/useAuth';
 
 const drawerWidth = 240;
 
-// Admin/Faculty menu items
+// Admin menu items
 const adminMenuItems = [
   { text: 'Dashboard', icon: <Dashboard />, path: '/dashboard' },
   { text: 'Students', icon: <School />, path: '/dashboard/students' },
@@ -55,6 +55,18 @@ const adminMenuItems = [
   { text: 'Library', icon: <LibraryBooks />, path: '/dashboard/library' },
   { text: 'Placement', icon: <Work />, path: '/dashboard/placement' },
   { text: 'Settings', icon: <Settings />, path: '/dashboard/settings' },
+];
+
+// Faculty menu items
+const facultyMenuItems = [
+  { text: 'Dashboard', icon: <Dashboard />, path: '/dashboard' },
+  { text: 'My Profile', icon: <AccountCircle />, path: '/dashboard/faculty-profile' },
+  { text: 'Attendance', icon: <Assessment />, path: '/dashboard/attendance' },
+  { text: 'Results', icon: <Assessment />, path: '/dashboard/results' },
+  { text: 'Study Materials', icon: <LibraryBooks />, path: '/dashboard/study-materials' },
+  { text: 'Notices', icon: <Announcement />, path: '/dashboard/notices' },
+  { text: 'Queries', icon: <QuestionAnswer />, path: '/dashboard/faculty-queries' },
+  { text: 'Timetable', icon: <Schedule />, path: '/dashboard/faculty-timetable' },
 ];
 
 // Student menu items
@@ -96,7 +108,13 @@ const Layout = () => {
   };
 
   // Determine menu items based on user role
-  const menuItems = user?.role === 'student' ? studentMenuItems : adminMenuItems;
+  const getMenuItems = () => {
+    if (user?.role === 'student') return studentMenuItems;
+    if (user?.role === 'faculty') return facultyMenuItems;
+    return adminMenuItems; // Default to admin for admin and other roles
+  };
+
+  const menuItems = getMenuItems();
 
   const drawer = (
     <div>

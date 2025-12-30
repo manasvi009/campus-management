@@ -43,6 +43,7 @@ import {
 import { useAuth } from '../utils/useAuth';
 import { adminAPI } from '../services/api';
 import StudentDashboard from './student/StudentDashboard';
+import FacultyDashboard from './faculty/FacultyDashboard';
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -53,6 +54,11 @@ const Dashboard = () => {
   // If user is a student, render student dashboard
   if (user?.role === 'student') {
     return <StudentDashboard />;
+  }
+
+  // If user is faculty, render faculty dashboard
+  if (user?.role === 'faculty') {
+    return <FacultyDashboard />;
   }
 
   useEffect(() => {
