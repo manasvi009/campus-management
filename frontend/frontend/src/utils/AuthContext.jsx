@@ -10,14 +10,27 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const storedUser = localStorage.getItem('user');
+    const initAuth = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const storedUser = localStorage.getItem('user');
 
-    if (token && storedUser) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setUser(JSON.parse(storedUser));
-    }
-    setLoading(false);
+        if (token && storedUser) {
+          // Verify token is still valid by making a request
+          await authAPI.getMe();
+          setUser(JSON.parse(storedUser));
+        }
+      } catch (error) {
+        // Token is invalid, clear localStorage
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    initAuth();
   }, []);
 
   const login = async (credentials) => {

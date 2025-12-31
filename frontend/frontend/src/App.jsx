@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { AuthProvider } from './utils/AuthContext';
-import LandingPage from './pages/LandingPage';
+import LandingPage from './pages/LandingPageSimple';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
@@ -27,6 +27,15 @@ import FacultyDashboard from './pages/faculty/FacultyDashboard';
 import FacultyProfile from './pages/faculty/FacultyProfile';
 import FacultyQueries from './pages/faculty/FacultyQueries';
 import FacultyTimetable from './pages/faculty/FacultyTimetable';
+// Student pages
+import StudentProfile from './pages/student/StudentProfile';
+import CourseEnrollment from './pages/student/CourseEnrollment';
+import Timetable from './pages/student/Timetable';
+import StudentAttendance from './pages/student/Attendance';
+import StudyMaterials from './pages/student/StudyMaterials';
+import Queries from './pages/student/Queries';
+import StudentNotices from './pages/student/Notices';
+import StudentPlacement from './pages/student/Placement';
 import './App.css';
 
 const theme = createTheme({

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5005/api';
 
 // Create axios instance
 const api = axios.create({
@@ -74,6 +74,7 @@ export const studentAPI = {
   getAvailableSubjects: () => api.get('/students/available-subjects'),
   enrollInSubject: (enrollmentData) => api.post('/students/enroll', enrollmentData),
   dropSubject: (enrollmentId) => api.delete(`/students/enroll/${enrollmentId}`),
+  getEnrollmentStats: () => api.get('/students/enrollments/stats'),
   getStudentTimetable: (params) => api.get('/students/timetable', { params }),
   getStudentAttendance: (params) => api.get('/students/attendance', { params }),
   getStudentNotices: (params) => api.get('/students/notices', { params }),
