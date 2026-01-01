@@ -25,12 +25,6 @@ const Login = () => {
 
   const from = location.state?.from?.pathname || '/';
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      return <Navigate to={from} replace />;
-    }
-  }, [isAuthenticated, from]);
-
   const handleChange = (e) => {
     setFormData({
       ...formData,

@@ -31,6 +31,7 @@ import {
   QuestionAnswer as QueryIcon,
   Assessment as AssessmentIcon,
   People as PeopleIcon,
+  CheckCircle as CheckCircleIcon,
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../utils/useAuth';
