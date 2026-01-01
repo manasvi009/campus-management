@@ -17,6 +17,10 @@ import {
   TableHead,
   TableRow,
   Paper,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
 } from '@mui/material';
 import {
   School as SchoolIcon,
